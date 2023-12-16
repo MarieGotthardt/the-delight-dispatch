@@ -26,5 +26,4 @@ jobs:
         env:
           HOPSWORKS_API_KEY: ${{ secrets.HOPSWORKS_API_KEY }}
           NEWS_DATA_KEY: ${{ secrets.NEWS_DATA_KEY }}
-        run: |
-        NEWS_DATA_KEY= ${{ secrets.NEWS_DATA_KEY }} python3 ./feature-pipeline.py
+        run: python3 ./feature-pipeline.py
