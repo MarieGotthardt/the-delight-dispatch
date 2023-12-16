@@ -20,11 +20,12 @@ def main():
     # Collect articles from many countries in a list
     all_articles = []
     country_codes = ['us', 'ca', 'ie', 'gb', 'au', 'nz'] # https://newsdata.io/news-sources
+    language = 'en'
 
     # Loop over countries
     for country_code in country_codes:
         # Fetch the news
-        response = client.news_api(country=country_code)
+        response = client.news_api(country=country_code, language=language)
 
         # Process the response
         if 'status' in response and response['status'] == 'success':
@@ -44,10 +45,13 @@ def main():
     # Remove rows that still have a null value somewhere
     news_df = news_df.dropna()
 
+    # Reformat date such that the time is dropped and just the date is kept
+    news_df['pubDate'] = pd.to_datetime(news_df['pubDate']).dt.date
+
     # Put articles in feature store
     news_fg = fs.get_or_create_feature_group(
         name="news_articles",
-        version=1,
+        version=2,
         primary_key=['article_id'],
         description="News articles dataset"
     )
