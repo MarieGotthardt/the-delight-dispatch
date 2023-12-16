@@ -2,14 +2,16 @@ import hopsworks
 from newsdataapi import NewsDataApiClient
 from datetime import datetime
 import pandas as pd
+import os
 
 def main():
     project = hopsworks.login()
     fs = project.get_feature_store()
 
     # temporary key access method (add an API secret to repo)
-    with open("./NEWS_DATA_KEY.txt", "r") as file:
-        api_key = file.read()
+    #with open("./NEWS_DATA_KEY.txt", "r") as file:
+    #    api_key = file.read()
+    api_key= os.environ["NEWS_DATA_KEY"]
 
     # Create a NewsData API client
     client = NewsDataApiClient(apikey=api_key)
