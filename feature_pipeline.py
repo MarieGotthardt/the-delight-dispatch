@@ -40,7 +40,7 @@ def main():
     news_df = pd.DataFrame(all_articles)
 
     # Remove columns that often have null values
-    news_df = news_df.drop(['keywords', 'creator', 'video_url', 'image_url'], axis=1)
+    news_df = news_df.drop(['keywords', 'creator', 'video_url', 'image_url', 'source_priority'], axis=1)
 
     # Remove rows that still have a null value somewhere
     news_df = news_df.dropna()
@@ -51,7 +51,7 @@ def main():
     # Put articles in feature store
     news_fg = fs.get_or_create_feature_group(
         name="news_articles",
-        version=2,
+        version=4,
         primary_key=['article_id'],
         description="News articles dataset"
     )
