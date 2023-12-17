@@ -15,12 +15,12 @@ def get_sentiment_value(news_object, sentiment_pipeline):
 
 def main():
     # Get today's date
-    today = datetime.now().date()
+    today = datetime.now().strftime('%Y-%m-%d')
 
     # Get news articles
     project = hopsworks.login()
     fs = project.get_feature_store()
-    news_fg = fs.get_feature_group(name="news_articles", version=4)
+    news_fg = fs.get_feature_group(name="news_articles", version=5)
     news_df = news_fg.read()
 
     # Only keep news articles from today
@@ -44,8 +44,8 @@ def main():
     # Put most positive article and average sentiment of today in feature group
     articles_monitoring_fg = fs.get_or_create_feature_group(
         name="articles_most_positive",
-        version=1,
-        primary_key=['pubdate'],
+        version=2,
+        primary_key=['article_id'],
         description="Today's most positive article and average rating"
     )
 

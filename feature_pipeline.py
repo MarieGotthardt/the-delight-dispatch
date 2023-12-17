@@ -48,12 +48,12 @@ def main():
     news_df = news_df.dropna()
 
     # Reformat date such that the time is dropped and just the date is kept
-    news_df['pubDate'] = pd.to_datetime(news_df['pubDate']).dt.date
+    news_df['pubDate'] = pd.to_datetime(news_df['pubDate']).dt.date.astype("string")
 
     # Put articles in feature store
     news_fg = fs.get_or_create_feature_group(
         name="news_articles",
-        version=4,
+        version=5,
         primary_key=['article_id'],
         description="News articles dataset"
     )
