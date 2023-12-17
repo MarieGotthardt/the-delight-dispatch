@@ -57,7 +57,7 @@ def main():
     # Put predictions for each of today's articles in feature group
     articles_predictions_fg = fs.get_or_create_feature_group(
         name="articles_predictions",
-        version=1,
+        version=2,
         primary_key=['article_id'],
         description="Sentiment ratings of articles"
     )
