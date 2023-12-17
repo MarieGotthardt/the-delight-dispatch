@@ -3,7 +3,7 @@ name: news-inference-pipeline-daily
 on:
   workflow_dispatch:
   schedule:
-    - cron: '15 09 * * *'
+    - cron: '00 10 * * *'
 
 jobs:
   test_schedule:
