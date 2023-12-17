@@ -2,3 +2,5 @@ hopsworks
 newsdataapi 
 transformers
 torch
+openai
+requests

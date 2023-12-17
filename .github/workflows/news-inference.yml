@@ -26,4 +26,5 @@ jobs:
         env:
           HOPSWORKS_API_KEY: ${{ secrets.HOPSWORKS_API_KEY }}
           NEWS_DATA_KEY: ${{ secrets.NEWS_DATA_KEY }}
+          OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
         run: python3 ./inference_pipeline.py
