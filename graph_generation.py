@@ -15,7 +15,7 @@ def get_sentiment_history():
     project = hopsworks.login()
     fs = project.get_feature_store()
 
-    most_positive_fg = fs.get_feature_group(name="articles_most_positive", version=2)
+    most_positive_fg = fs.get_feature_group(name="articles_most_positive", version=3)
     most_positive_df = most_positive_fg.read()
     most_positive_sentiment = most_positive_df["sentiment"].values
     most_positive_date = most_positive_df["pubdate"].values
@@ -30,11 +30,11 @@ def plot_most_positive_timeline(most_positive_sentiment, most_positive_date, n):
     else:
         n = len(most_positive_date)
 
-    plt.plot(most_positive_date, most_positive_sentiment)
+    plt.plot(most_positive_date, most_positive_sentiment, '--co')
     plt.xlabel("Date")
     plt.ylabel("Sentiment Rating")
-    # plt.ylim(np.round(most_positive_sentiment.min()), np.round(most_positive_sentiment.max()))
-    plt.title(f"Sentiment Ratings of Most Positive Articles of the Past {n} Days ")
+    plt.ylim(-1, 1.1)
+    plt.title(f"Sentiment Ratings of Most Positive Articles for the Past {n} Days ")
     plt.savefig('./most_positive_timeline.png')
     plt.show()
 
@@ -47,9 +47,10 @@ def plot_average_sentiment_timeline(average_sentiment, most_positive_date, n):
     else:
         n = len(most_positive_date)
 
-    plt.plot(most_positive_date, average_sentiment)
+    plt.plot(most_positive_date, average_sentiment, '--om')
     plt.xlabel("Date")
     plt.ylabel("Sentiment Rating")
+    plt.ylim(-1, 1.1)
     plt.title(f"Average Sentiment Ratings of the Past {n} Days ")
     plt.savefig('./average_sentiment_timeline.png')
     plt.show()

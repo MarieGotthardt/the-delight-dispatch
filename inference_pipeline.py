@@ -5,6 +5,9 @@ from transformers import pipeline
 from openai import OpenAI
 import requests
 import os
+from ast import literal_eval
+from graph_generation import *
+import numpy as np
 
 
 def format_sentiment(sentiment):
@@ -31,12 +34,16 @@ def main():
     project = hopsworks.login()
     dataset_api = project.get_dataset_api()
     fs = project.get_feature_store()
-    news_fg = fs.get_feature_group(name="news_articles", version=5)
+    news_fg = fs.get_feature_group(name="news_articles", version=6)
     news_df = news_fg.read()
+
+    # Check data types of category and country
+    print(f'type of country: {type(news_df["country"].iloc[0])}')
+    print(f'type of category: {type(news_df["category"].iloc[0])}')
+
 
     # Only keep news articles from today
     news_df = news_df[news_df['pubdate'] == today]
-    print(f"Len of df: {len(news_df)}")
 
     # Add sentiments for articles
     sentiment_pipeline = pipeline("sentiment-analysis")
@@ -50,12 +57,29 @@ def main():
     most_positive = pd.DataFrame(most_positive).T
     most_positive['sentiment'] = most_positive['sentiment'].astype('float')
 
+    # Cast the category and the country columns
+    # most_positive["country"] = most_positive["country"].apply(literal_eval)
+    # most_positive["category"] = most_positive["category"].apply(literal_eval)
+
+    # Create timelines for average sentiment and most positive sentiment
+    most_positive_date, most_positive_sentiment, average_sentiment = get_sentiment_history()
+    most_positive_date = np.append(most_positive_date, most_positive["pubdate"].values)
+    most_positive_sentiment = np.append(most_positive_sentiment, most_positive["sentiment"].values)
+    average_sentiment = np.append(average_sentiment, news_df['sentiment'].mean())
+
+    # Plot most positive sentiment timeline and upload it to hopsworks
+    plot_most_positive_timeline(most_positive_sentiment, most_positive_date, n=5)
+    dataset_api.upload("./most_positive_timeline.png", "Resources/images", overwrite=True)
+
+    # Plot average sentiment timeline and upload it to hopsworks
+    plot_most_positive_timeline(average_sentiment, most_positive_date, n=5)
+    dataset_api.upload("./average_sentiment_timeline.png", "Resources/images", overwrite=True)
 
 
     # Put most positive article and average sentiment of today in feature group
     articles_monitoring_fg = fs.get_or_create_feature_group(
         name="articles_most_positive",
-        version=2,
+        version=3,
         primary_key=['article_id'],
         description="Today's most positive article and average rating"
     )
@@ -65,10 +89,11 @@ def main():
 
     articles_monitoring_fg.insert(most_positive, write_options={"wait_for_job": False})
 
+
     # Put predictions for each of today's articles in feature group
     articles_predictions_fg = fs.get_or_create_feature_group(
         name="articles_predictions",
-        version=2,
+        version=3,
         primary_key=['article_id'],
         description="Sentiment ratings of articles"
     )

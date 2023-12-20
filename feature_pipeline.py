@@ -50,10 +50,14 @@ def main():
     # Reformat date such that the time is dropped and just the date is kept
     news_df['pubDate'] = pd.to_datetime(news_df['pubDate']).dt.date.astype("string")
 
+    # Reformat data types of category and country to string
+    news_df['country'] = news_df['country'].astype("string")
+    news_df['category'] = news_df['category'].astype("string")
+
     # Put articles in feature store
     news_fg = fs.get_or_create_feature_group(
         name="news_articles",
-        version=5,
+        version=6,
         primary_key=['article_id'],
         description="News articles dataset"
     )
