@@ -5,12 +5,6 @@ import numpy as np
 import pandas as pd
 import matplotlib.pyplot as plt
 
-"""
-Functions for Graph Generation
-"""
-
-
-# Get historical data
 def get_sentiment_history():
     project = hopsworks.login()
     fs = project.get_feature_store()
@@ -22,7 +16,7 @@ def get_sentiment_history():
     average_sentiment = most_positive_df["avg_sentiment"].values
     return most_positive_date, most_positive_sentiment, average_sentiment
 
-# Plot historical data for the most positive sentiment
+
 def plot_most_positive_timeline(most_positive_sentiment, most_positive_date, n):
     if len(most_positive_date) > n:
         most_positive_date = most_positive_date[-n:]
