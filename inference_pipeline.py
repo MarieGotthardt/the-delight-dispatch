@@ -75,7 +75,7 @@ def main():
     plot_most_positive_timeline(average_sentiment, most_positive_date, n=5)
     dataset_api.upload("./average_sentiment_timeline.png", "Resources/images", overwrite=True)
 
-
+    """
     # Put most positive article and average sentiment of today in feature group
     articles_monitoring_fg = fs.get_or_create_feature_group(
         name="articles_most_positive",
@@ -99,7 +99,7 @@ def main():
     )
     prediction_df = news_df.filter(['article_id', 'pubdate', 'sentiment'], axis=1)
     articles_predictions_fg.insert(prediction_df, write_options={"wait_for_job": False})
-
+    """
     # Create image today's most positive article and upload to Hopsworks
     OPENAI_API_KEY = os.environ['OPENAI_API_KEY']
     client = OpenAI(api_key=OPENAI_API_KEY)
