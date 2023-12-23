@@ -31,6 +31,7 @@ def plot_most_positive_timeline(most_positive_sentiment, most_positive_date, n):
     plt.title(f"Sentiment Ratings of Most Positive Articles for the Past {n} Days ")
     plt.savefig('./most_positive_timeline.png')
     plt.show()
+    plt.close()
 
 
 # Plot historical data for the average sentiment
@@ -48,3 +49,4 @@ def plot_average_sentiment_timeline(average_sentiment, most_positive_date, n):
     plt.title(f"Average Sentiment Ratings of the Past {n} Days ")
     plt.savefig('./average_sentiment_timeline.png')
     plt.show()
+    plt.close()
