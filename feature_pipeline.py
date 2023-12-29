@@ -42,7 +42,7 @@ def main():
     news_df = pd.DataFrame(all_articles)
 
     # Remove columns that often have null values
-    news_df = news_df.drop(['keywords', 'creator', 'video_url', 'image_url', 'source_priority'], axis=1)
+    news_df = news_df.drop(['keywords', 'creator', 'video_url', 'image_url', 'source_priority', 'ai_tag', 'sentiment', 'sentiment_stats'], axis=1)
 
     # Remove rows that still have a null value somewhere
     news_df = news_df.dropna()
