@@ -7,9 +7,9 @@ import requests
 import os
 from ast import literal_eval
 from graph_generation import *
+from article_summarization import *
 import numpy as np
 import matplotlib.pyplot as plt
-
 
 def format_sentiment(sentiment):
     if sentiment['label'] == 'NEGATIVE':
@@ -75,8 +75,11 @@ def main():
     plot_average_sentiment_timeline(average_sentiment, most_positive_date, n=5)
     dataset_api.upload("./average_sentiment_timeline.png", "Resources/images", overwrite=True)
 
-    # TODO: Create a summary of the article content
-    
+    # Summarize article content
+    try:
+        news_df['content'] = news_df.apply(summarize_article, axis=1)
+    except:
+        pass # if summarization fails, leave content as it is
     
     # Put most positive article and average sentiment of today in feature group
     articles_monitoring_fg = fs.get_or_create_feature_group(
@@ -91,7 +94,6 @@ def main():
 
     articles_monitoring_fg.insert(most_positive, write_options={"wait_for_job": False})
 
-
     # Put predictions for each of today's articles in feature group
     articles_predictions_fg = fs.get_or_create_feature_group(
         name="articles_predictions",
@@ -102,8 +104,8 @@ def main():
     prediction_df = news_df.filter(['article_id', 'pubdate', 'sentiment'], axis=1)
     articles_predictions_fg.insert(prediction_df, write_options={"wait_for_job": False})
     
+    # Create image today's most positive article and upload to Hopsworks
     try:
-        # Create image today's most positive article and upload to Hopsworks
         OPENAI_API_KEY = os.environ['OPENAI_API_KEY']
         client = OpenAI(api_key=OPENAI_API_KEY)
         prompt = "Create a simple and purely visual illustration for the headline: " + most_positive.iloc[0]['title']
