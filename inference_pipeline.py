@@ -42,7 +42,6 @@ def main():
     print(f'type of country: {type(news_df["country"].iloc[0])}')
     print(f'type of category: {type(news_df["category"].iloc[0])}')
 
-
     # Only keep news articles from today
     news_df = news_df[news_df['pubdate'] == today]
 
@@ -66,7 +65,7 @@ def main():
     most_positive_date, most_positive_sentiment, average_sentiment = get_sentiment_history()
     most_positive_date = np.append(most_positive_date, most_positive["pubdate"].values)
     most_positive_sentiment = np.append(most_positive_sentiment, most_positive["sentiment"].values)
-    average_sentiment = np.append(average_sentiment, news_df['sentiment'].mean())
+    average_sentiment = np.append(average_sentiment, avg_sentiment)
 
     # Plot most positive sentiment timeline and upload it to hopsworks
     plot_most_positive_timeline(most_positive_sentiment, most_positive_date, n=5)
@@ -86,7 +85,7 @@ def main():
     )
 
     print(f'sentiment: {most_positive["sentiment"]}')
-    most_positive['avg_sentiment'] = news_df['sentiment'].mean()
+    most_positive['avg_sentiment'] = avg_sentiment
 
     articles_monitoring_fg.insert(most_positive, write_options={"wait_for_job": False})
 
