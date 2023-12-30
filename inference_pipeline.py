@@ -46,7 +46,7 @@ def main():
     news_df = news_df[news_df['pubdate'] == today]
 
     # Add sentiments for articles
-    sentiment_pipeline = pipeline("sentiment-analysis")
+    sentiment_pipeline = pipeline(model="distilbert-base-uncased-finetuned-sst-2-english")
     news_df['sentiment'] = news_df.apply(get_sentiment_value, sentiment_pipeline=sentiment_pipeline, axis=1)
 
     # Calculate today's average sentiment
