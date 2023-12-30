@@ -76,7 +76,7 @@ def main():
     dataset_api.upload("./average_sentiment_timeline.png", "Resources/images", overwrite=True)
 
     # TODO: Create a summary of the article content
-    # Load model for summarizing from Hugging Face
+    
     
     # Put most positive article and average sentiment of today in feature group
     articles_monitoring_fg = fs.get_or_create_feature_group(
