@@ -101,14 +101,17 @@ def main():
     prediction_df = news_df.filter(['article_id', 'pubdate', 'sentiment'], axis=1)
     articles_predictions_fg.insert(prediction_df, write_options={"wait_for_job": False})
     
-    # Create image today's most positive article and upload to Hopsworks
-    OPENAI_API_KEY = os.environ['OPENAI_API_KEY']
-    client = OpenAI(api_key=OPENAI_API_KEY)
-    prompt = "Create a simple news article drawing for the headline: " + most_positive.iloc[0]['title']
-    response = client.images.generate(model="dall-e-3", prompt=prompt, size="1024x1024", quality="standard", n=1)
-    image_url = response.data[0].url
-    save_image_from_url(image_url, './news_image.png')
-    dataset_api.upload("./news_image.png", "Resources/images", overwrite=True)
+    try:
+        # Create image today's most positive article and upload to Hopsworks
+        OPENAI_API_KEY = os.environ['OPENAI_API_KEY']
+        client = OpenAI(api_key=OPENAI_API_KEY)
+        prompt = "Create a simple illustration that does not contain any text for the headline: " + most_positive.iloc[0]['title']
+        response = client.images.generate(model="dall-e-3", prompt=prompt, size="1024x1024", quality="standard", n=1)
+        image_url = response.data[0].url
+        save_image_from_url(image_url, './news_image.png')
+        dataset_api.upload("./news_image.png", "Resources/images", overwrite=True)
+    except:
+        pass # API did not allow new image to be created (app will use a default image instead)
 
 
 if __name__ == "__main__":
