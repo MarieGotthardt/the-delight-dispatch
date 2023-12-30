@@ -75,6 +75,8 @@ def main():
     plot_average_sentiment_timeline(average_sentiment, most_positive_date, n=5)
     dataset_api.upload("./average_sentiment_timeline.png", "Resources/images", overwrite=True)
 
+    # TODO: Create a summary of the article content
+    # Load model for summarizing from Hugging Face
     
     # Put most positive article and average sentiment of today in feature group
     articles_monitoring_fg = fs.get_or_create_feature_group(
@@ -104,7 +106,7 @@ def main():
         # Create image today's most positive article and upload to Hopsworks
         OPENAI_API_KEY = os.environ['OPENAI_API_KEY']
         client = OpenAI(api_key=OPENAI_API_KEY)
-        prompt = "Create a simple illustration that does not contain any text for the headline: " + most_positive.iloc[0]['title']
+        prompt = "Create a simple and purely visual illustration for the headline: " + most_positive.iloc[0]['title']
         response = client.images.generate(model="dall-e-3", prompt=prompt, size="1024x1024", quality="standard", n=1)
         image_url = response.data[0].url
         save_image_from_url(image_url, './news_image.png')
