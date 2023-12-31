@@ -78,8 +78,9 @@ def main():
     # Summarize article content
     try:
         news_df['content'] = news_df.apply(summarize_article, axis=1)
-    except:
-        pass # if summarization fails, leave content as it is
+    except Exception as e: # if summarization fails, leave content as it is
+        print("Article could not be summarized")
+        print(e)
     
     # Put most positive article and average sentiment of today in feature group
     articles_monitoring_fg = fs.get_or_create_feature_group(
@@ -113,8 +114,9 @@ def main():
         image_url = response.data[0].url
         save_image_from_url(image_url, './news_image.png')
         dataset_api.upload("./news_image.png", "Resources/images", overwrite=True)
-    except:
-        pass # API did not allow new image to be created (app will use a default image instead)
+    except Exception as e: # API did not allow new image to be created (app will use a default image instead)
+        print("OpenAI could not generate an image")
+        print(e)
 
 
 if __name__ == "__main__":
