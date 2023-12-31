@@ -7,9 +7,9 @@ import requests
 import os
 from ast import literal_eval
 from graph_generation import *
+from article_summarization import *
 import numpy as np
 import matplotlib.pyplot as plt
-
 
 def format_sentiment(sentiment):
     if sentiment['label'] == 'NEGATIVE':
@@ -42,12 +42,11 @@ def main():
     print(f'type of country: {type(news_df["country"].iloc[0])}')
     print(f'type of category: {type(news_df["category"].iloc[0])}')
 
-
     # Only keep news articles from today
     news_df = news_df[news_df['pubdate'] == today]
 
     # Add sentiments for articles
-    sentiment_pipeline = pipeline("sentiment-analysis")
+    sentiment_pipeline = pipeline(model="distilbert-base-uncased-finetuned-sst-2-english")
     news_df['sentiment'] = news_df.apply(get_sentiment_value, sentiment_pipeline=sentiment_pipeline, axis=1)
 
     # Calculate today's average sentiment
@@ -66,7 +65,7 @@ def main():
     most_positive_date, most_positive_sentiment, average_sentiment = get_sentiment_history()
     most_positive_date = np.append(most_positive_date, most_positive["pubdate"].values)
     most_positive_sentiment = np.append(most_positive_sentiment, most_positive["sentiment"].values)
-    average_sentiment = np.append(average_sentiment, news_df['sentiment'].mean())
+    average_sentiment = np.append(average_sentiment, avg_sentiment)
 
     # Plot most positive sentiment timeline and upload it to hopsworks
     plot_most_positive_timeline(most_positive_sentiment, most_positive_date, n=5)
@@ -76,6 +75,11 @@ def main():
     plot_average_sentiment_timeline(average_sentiment, most_positive_date, n=5)
     dataset_api.upload("./average_sentiment_timeline.png", "Resources/images", overwrite=True)
 
+    # Summarize article content
+    try:
+        news_df['content'] = news_df.apply(summarize_article, axis=1)
+    except:
+        pass # if summarization fails, leave content as it is
     
     # Put most positive article and average sentiment of today in feature group
     articles_monitoring_fg = fs.get_or_create_feature_group(
@@ -86,10 +90,9 @@ def main():
     )
 
     print(f'sentiment: {most_positive["sentiment"]}')
-    most_positive['avg_sentiment'] = news_df['sentiment'].mean()
+    most_positive['avg_sentiment'] = avg_sentiment
 
     articles_monitoring_fg.insert(most_positive, write_options={"wait_for_job": False})
-
 
     # Put predictions for each of today's articles in feature group
     articles_predictions_fg = fs.get_or_create_feature_group(
@@ -102,13 +105,16 @@ def main():
     articles_predictions_fg.insert(prediction_df, write_options={"wait_for_job": False})
     
     # Create image today's most positive article and upload to Hopsworks
-    OPENAI_API_KEY = os.environ['OPENAI_API_KEY']
-    client = OpenAI(api_key=OPENAI_API_KEY)
-    prompt = "Create a simple news article drawing for the headline: " + most_positive.iloc[0]['title']
-    response = client.images.generate(model="dall-e-3", prompt=prompt, size="1024x1024", quality="standard", n=1)
-    image_url = response.data[0].url
-    save_image_from_url(image_url, './news_image.png')
-    dataset_api.upload("./news_image.png", "Resources/images", overwrite=True)
+    try:
+        OPENAI_API_KEY = os.environ['OPENAI_API_KEY']
+        client = OpenAI(api_key=OPENAI_API_KEY)
+        prompt = "Create a simple and purely visual illustration for the headline: " + most_positive.iloc[0]['title']
+        response = client.images.generate(model="dall-e-3", prompt=prompt, size="1024x1024", quality="standard", n=1)
+        image_url = response.data[0].url
+        save_image_from_url(image_url, './news_image.png')
+        dataset_api.upload("./news_image.png", "Resources/images", overwrite=True)
+    except:
+        pass # API did not allow new image to be created (app will use a default image instead)
 
 
 if __name__ == "__main__":
