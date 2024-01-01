@@ -116,6 +116,7 @@ def main():
         dataset_api.upload("./news_image.png", "Resources/images", overwrite=True)
     except Exception as e: # API did not allow new image to be created (app will use a default image instead)
         print("OpenAI could not generate an image")
+        print("Headline: " + most_positive.iloc[0]['title'])
         print(e)
 
 
