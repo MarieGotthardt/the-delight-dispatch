@@ -77,7 +77,7 @@ def main():
 
     # Summarize article content
     try:
-        news_df['content'] = news_df.apply(summarize_article, axis=1)
+        most_positive['content'] = most_positive.apply(summarize_article, axis=1)
     except Exception as e: # if summarization fails, leave content as it is
         print("Article could not be summarized")
         print(e)
