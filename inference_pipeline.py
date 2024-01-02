@@ -77,7 +77,7 @@ def main():
 
     # Summarize article content
     try:
-        news_df['content'] = news_df.apply(summarize_article, axis=1)
+        most_positive['content'] = most_positive.apply(summarize_article, axis=1)
     except Exception as e: # if summarization fails, leave content as it is
         print("Article could not be summarized")
         print(e)
@@ -109,13 +109,14 @@ def main():
     try:
         OPENAI_API_KEY = os.environ['OPENAI_API_KEY']
         client = OpenAI(api_key=OPENAI_API_KEY)
-        prompt = "Create a simple and purely visual illustration for the headline: " + most_positive.iloc[0]['title']
+        prompt = "Create a simple and purely visual illustration of: " + most_positive.iloc[0]['title']
         response = client.images.generate(model="dall-e-3", prompt=prompt, size="1024x1024", quality="standard", n=1)
         image_url = response.data[0].url
         save_image_from_url(image_url, './news_image.png')
         dataset_api.upload("./news_image.png", "Resources/images", overwrite=True)
     except Exception as e: # API did not allow new image to be created (app will use a default image instead)
         print("OpenAI could not generate an image")
+        print("Headline: " + most_positive.iloc[0]['title'])
         print(e)
 
 
