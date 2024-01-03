@@ -33,7 +33,7 @@ def summarize_article(article_object):
     # decode the output and join into one string with one paragraph per summary batch
     summary_batch_lst = []
     for summary_id in summary_ids_lst:
-        summary_batch = [tokenizer.decode(g, skip_special_tokens=True, clean_up_tokenization_spaces=False) for g in summary_id]
+        summary_batch = [tokenizer.decode(g, skip_special_tokens=True, clean_up_tokenization_spaces=True) for g in summary_id]
         summary_batch_lst.append(summary_batch[0])
     summary_all = '\n'.join(summary_batch_lst)
 
