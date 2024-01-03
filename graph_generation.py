@@ -7,8 +7,6 @@ import matplotlib.pyplot as plt
 import matplotlib as mpl
 
 mpl.rcParams['text.color'] = 'black'
-#mpl.rc('font',family='Courier New')
-mpl.rcParams['font.family'] = 'Courier New'
 
 def get_sentiment_history():
     project = hopsworks.login()
@@ -52,14 +50,15 @@ def plot_average_sentiment_timeline(average_sentiment, most_positive_date, n):
     else:
         n = len(most_positive_date)
 
+    plt.rcParams['font.family'] = 'monospace'
     plt.plot(most_positive_date, average_sentiment, '--o', color="darkred", label="Average Sentiment")
-    plt.xlabel("Date", fontname="Courier New", fontsize=12)
-    plt.xticks(fontname="Courier New", fontsize=10)
-    plt.ylabel("Sentiment Rating", fontname="Courier New", fontsize=12)
+    plt.xlabel("Date", fontsize=12)
+    plt.xticks(fontsize=10)
+    plt.ylabel("Sentiment Rating", fontsize=12)
     plt.ylim(-1, 1.1)
-    plt.yticks(fontname="Courier New", fontsize=10)
+    plt.yticks(fontsize=10)
     plt.axhline(y=0, xmin=0, xmax=len(most_positive_date), color='gray', linestyle='--', label="Neutral Sentiment")
-    plt.title(f"Average Sentiment Ratings of the Past {n} Days ", fontname="Courier New", fontsize=12)
+    plt.title(f"Average Sentiment Ratings of the Past {n} Days ", fontsize=12)
     plt.legend(loc="lower right")
     plt.savefig('./average_sentiment_timeline.png')
     plt.show()
