@@ -34,7 +34,7 @@ def plot_most_positive_timeline(most_positive_sentiment, most_positive_date, n):
     plt.ylabel("Sentiment Rating", fontname="Courier New", fontsize=12)
     plt.ylim(-1, 1.1)
     plt.yticks(fontname="Courier New", fontsize=10)
-    plt.axhline(y=0, xmin=0, xmax=len(most_positive_date), color='gray', linestyle='--', label="Baseline")
+    plt.axhline(y=0, xmin=0, xmax=len(most_positive_date), color='gray', linestyle='--', label="Neutral Sentiment")
     plt.title(f"Sentiment Ratings of Most Positive Articles \n for the Past {n} Days ", fontname="Courier New",
               fontsize=12)
     plt.legend(loc="lower right")
@@ -57,7 +57,7 @@ def plot_average_sentiment_timeline(average_sentiment, most_positive_date, n):
     plt.ylabel("Sentiment Rating", fontname="Courier New", fontsize=12)
     plt.ylim(-1, 1.1)
     plt.yticks(fontname="Courier New", fontsize=10)
-    plt.axhline(y=0, xmin=0, xmax=len(most_positive_date), color='gray', linestyle='--', label="Baseline")
+    plt.axhline(y=0, xmin=0, xmax=len(most_positive_date), color='gray', linestyle='--', label="Neutral Sentiment")
     plt.title(f"Average Sentiment Ratings of the Past {n} Days ", fontname="Courier New", fontsize=12)
     plt.legend(loc="lower right")
     plt.savefig('./average_sentiment_timeline.png')
