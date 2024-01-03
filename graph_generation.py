@@ -29,7 +29,7 @@ def plot_most_positive_timeline(most_positive_sentiment, most_positive_date, n):
     else:
         n = len(most_positive_date)
         
-    plt.rcParams['font.family'] = 'Courier New'
+    plt.rcParams['font.family'] = 'monospace'
     plt.plot(most_positive_date, most_positive_sentiment, '--o', color="teal", label="Most Positive Sentiment")
     plt.xlabel("Date", fontsize=12)
     plt.xticks(fontsize=10)
