@@ -10,6 +10,13 @@ from graph_generation import *
 from article_summarization import *
 import numpy as np
 import matplotlib.pyplot as plt
+import matplotlib as mpl
+import matplotlib.font_manager
+
+mpl.rcParams['text.color'] = 'black'
+mpl.rc('font',family='Courier New')
+
+
 
 def format_sentiment(sentiment):
     if sentiment['label'] == 'NEGATIVE':
