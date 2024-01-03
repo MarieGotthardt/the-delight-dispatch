@@ -14,7 +14,8 @@ jobs:
 
       - name: install fonts
         run: | 
-          sudo apt-get install -y fonts-courier
+          sudo add-apt-repository multiverse
+          sudo apt update && sudo apt install ttf-mscorefonts-installer
 
       - name: setup python
         uses: actions/setup-python@v2
