@@ -14,7 +14,8 @@ jobs:
 
       - name: install fonts
         run: | 
-          sudo apt-get install msttcorefonts -qq
+          sudo apt install msttcorefonts -qq
+          rm ~/.cache/matplotlib -rf
 
       - name: setup python
         uses: actions/setup-python@v2
