@@ -12,6 +12,11 @@ jobs:
       - name: checkout repo content
         uses: actions/checkout@v2
 
+      - name: install fonts
+        run: | 
+          apt-get install -y fontconfig    
+          apt-get install -y ttf-mscorefonts-installer
+
       - name: setup python
         uses: actions/setup-python@v2
         with:
