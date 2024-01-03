@@ -14,7 +14,8 @@ import matplotlib as mpl
 import matplotlib.font_manager
 
 mpl.rcParams['text.color'] = 'black'
-mpl.rc('font',family='Courier New')
+#mpl.rc('font',family='Courier New')
+mpl.rcParams['font.family'] = 'Courier New'
 
 
 
