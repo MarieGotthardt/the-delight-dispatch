@@ -7,7 +7,8 @@ import matplotlib.pyplot as plt
 import matplotlib as mpl
 
 mpl.rcParams['text.color'] = 'black'
-mpl.rc('font',family='Courier New')
+#mpl.rc('font',family='Courier New')
+mpl.rcParams['font.family'] = 'Courier New'
 
 def get_sentiment_history():
     project = hopsworks.login()
