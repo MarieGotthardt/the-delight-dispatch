@@ -82,6 +82,7 @@ def main():
     plot_average_sentiment_timeline(average_sentiment, most_positive_date, n=5)
     dataset_api.upload("./average_sentiment_timeline.png", "Resources/images", overwrite=True)
 
+    """
     # Summarize article content
     try:
         most_positive['content'] = most_positive.apply(summarize_article, axis=1)
@@ -126,6 +127,6 @@ def main():
         print("Headline: " + most_positive.iloc[0]['title'])
         print(e)
 
-
+    """
 if __name__ == "__main__":
     main()
