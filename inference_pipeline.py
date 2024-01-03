@@ -13,11 +13,6 @@ import matplotlib.pyplot as plt
 import matplotlib as mpl
 import matplotlib.font_manager
 
-mpl.rcParams['text.color'] = 'black'
-#mpl.rc('font',family='Courier New')
-mpl.rcParams['font.family'] = 'Courier New'
-
-
 
 def format_sentiment(sentiment):
     if sentiment['label'] == 'NEGATIVE':
