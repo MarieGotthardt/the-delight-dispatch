@@ -2,7 +2,7 @@
 The Delight Dispatch uses a news API and transformer models for sentiment analysis to deliver positive news everyday!
 
 Demo: [Delight News: The Delight Dispatch](https://huggingface.co/spaces/DelightNews/the-delight-dispatch-demo) \
-Video presentation of demo: 
+Video presentation of demo: [Demo Video](https://drive.google.com/drive/folders/15v1u0pmGAt6jS4SVb1TNB26lIh3mWzKs)
 
 NOTE: Unfortunately the news API we are using will make changes on January 15th, so we have therefore created a video presentation to demonstrate our final product, but our demo on Hugging Face will have reduced content as a result of the news API change.
 
