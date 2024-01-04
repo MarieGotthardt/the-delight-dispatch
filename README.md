@@ -10,14 +10,14 @@ NOTE: Unfortunately the news API we are using will make changes on January 15th,
 In this project, we created a severless ML system for displaying positive news each day. Our system consists of three components:
 A feature pipeline for preparing the data and inserting it into a feature group
 An inference pipeline for determining the most positive article every day
-An user interface for displaying the most positive article of the day as well as historical sentiment data of the retrieved news articles
+A user interface for displaying the most positive article of the day as well as historical sentiment data of the retrieved news articles
 To retrieve news articles daily, we used the newsdata.io API. 
-In the following sections we explain our data and the different components of our system in more detail. 
+In the following sections, we explain our data and the different components of our system in more detail. 
 
 ## Data
-For this project, we retrieved articles written in English from different newspapers and from different countries (Great Britain, US, Australia, New Zealand, Canada and Ireland) using the [newsdata.io API](https://newsdata.io/). 
+For this project, we retrieved articles written in English from different newspapers and from different countries (Great Britain, US, Australia, New Zealand, Canada, and Ireland) using the [newsdata.io API](https://newsdata.io/). 
 The API returns the following attributes for each requested article: 
-'article_id', 'title', 'link', 'keywords', 'creator', 'video_url', 'description', 'content', 'pubDate', 'image_url', 'source_id', 'source_priority', 'country', 'category', 'language', 'ai_tag', 'sentiment', 'sentiment_stats'
+"""'article_id', 'title', 'link', 'keywords', 'creator', 'video_url', 'description', 'content', 'pubDate', 'image_url', 'source_id', 'source_priority', 'country', 'category', 'language', 'ai_tag', 'sentiment', 'sentiment_stats'""".
 
 ## System Architecture
 ### Feature Pipeline
