@@ -1,7 +1,7 @@
 # The Delight Dispatch ☀️🗞️
 The Delight Dispatch uses a news API and transformer models for sentiment analysis to deliver positive news everyday!
 
-Demo: [Delight News: The Delight Dispatch](https://huggingface.co/spaces/DelightNews/the-delight-dispatch-demo) \
+Demo: [Delight News: The Delight Dispatch](https://huggingface.co/spaces/DelightNews/the-delight-dispatch-demo) 
 
 ## Application Overview
 In this project, we created a severless ML system for displaying positive news each day. Our system consists of three components:
