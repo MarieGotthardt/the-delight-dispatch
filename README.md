@@ -54,5 +54,5 @@ The OpenAI API sometimes refuses to create images for headlines, for example, du
 Currently, the UI only has one positive article, an image to go with it, and timeline plots for average sentiment and most positive sentiment history. However, it is possible to conceive of many extensions to the UI, such as having several articles from different categories (i.e. sports, entertainment, etc.) or adding more plots to show the sentiment of articles from different countries or newspapers, showing the total sentiment history of stored articles as a probability distribution over how likely different sentiments are, and so on.
 
 ## References
-[[1]](https://paperswithcode.com/paper/distilbert-a-distilled-version-of-bert) \
-[[2]](https://discuss.huggingface.co/t/summarization-on-long-documents/920/24?page=2)
+[[1] DistilBERT, a distilled version of BERT: smaller, faster, cheaper and lighter](https://paperswithcode.com/paper/distilbert-a-distilled-version-of-bert) \
+[[2] HuggingFace Transformers: Summarization on long documents](https://discuss.huggingface.co/t/summarization-on-long-documents/920/24?page=2)
