@@ -17,7 +17,9 @@ In the following sections, we explain our data and the different components of o
 ## Data
 For this project, we retrieved articles written in English from different newspapers and from different countries (Great Britain, US, Australia, New Zealand, Canada, and Ireland) using the [newsdata.io API](https://newsdata.io/). 
 The API returns the following attributes for each requested article: 
-"""'article_id', 'title', 'link', 'keywords', 'creator', 'video_url', 'description', 'content', 'pubDate', 'image_url', 'source_id', 'source_priority', 'country', 'category', 'language', 'ai_tag', 'sentiment', 'sentiment_stats'""".
+"""
+'article_id', 'title', 'link', 'keywords', 'creator', 'video_url', 'description', 'content', 'pubDate', 'image_url', 'source_id', 'source_priority', 'country', 'category', 'language', 'ai_tag', 'sentiment', 'sentiment_stats'.
+"""
 
 ## System Architecture
 ### Feature Pipeline
