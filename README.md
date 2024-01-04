@@ -2,12 +2,6 @@
 The Delight Dispatch uses a news API and transformer models for sentiment analysis to deliver positive news everyday!
 
 Demo: [Delight News: The Delight Dispatch](https://huggingface.co/spaces/DelightNews/the-delight-dispatch-demo) \
-Video presentation of demo: 
-
-https://github.com/MarieGotthardt/the-delight-dispatch/assets/45031262/f1c60b62-7a1b-4352-90a9-52ba079c60c9
-
-
-NOTE: Unfortunately the news API we are using will make changes on January 15th, so we have therefore created a video presentation to demonstrate our final product, but our demo on Hugging Face will have reduced content as a result of the news API change.
 
 ## Application Overview
 In this project, we created a severless ML system for displaying positive news each day. Our system consists of three components:
@@ -44,7 +38,9 @@ Our subjective judgment is that the articles that are selected as the most posit
 The text content of the articles from the API also sometimes contains a lot of self-referential information about the source of the article such as links to social media accounts or information about subscriptions, but we hope that our summarization method will omit most of this information from the summary we display.
 
 ### UI Adaptions due to API changes
-As mentioned above, the API used to retrieve articles daily will change the data provided for users using a *Free* plan and thus will not provide the full content of articles anymore. As we used the full article to create the summary displayed on our UI on Hugging Face, we will omit the summary from our UI. However, all other parts displayed on the UI will remain the same. 
+Unfortunately the news API we are using will make changes on January 15th. More specifically, the data provided for users using a *Free* plan will be reduced e.g., the full content of articles will not be provided anymore. As we use the full article content to create the summary displayed on our UI on Hugging Face, we will omit the summary from our UI. However, all other parts displayed on the UI will remain the same. To demonstrate how our UI was intended to look like, we have created a short video presentation:
+
+https://github.com/MarieGotthardt/the-delight-dispatch/assets/45031262/f1c60b62-7a1b-4352-90a9-52ba079c60c9
 
 ### Possible Improvements and Extensions
 #### Sentiment Rating
