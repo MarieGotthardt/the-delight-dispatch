@@ -1,7 +1,7 @@
 # The Delight Dispatch ☀️🗞️
 The Delight Dispatch uses a news API and transformer models for sentiment analysis to deliver positive news everyday!
 
-Demo: [Delight News: The Delight Dispatch](https://huggingface.co/spaces/DelightNews/the-delight-dispatch-demo) 
+Demo on Hugging Face [Delight News: The Delight Dispatch](https://huggingface.co/spaces/DelightNews/the-delight-dispatch-demo) 
 
 ## Application Overview
 In this project, we created a severless ML system for displaying positive news each day. Our system consists of three components:
@@ -54,4 +54,4 @@ Currently, the UI only has one positive article, an image to go with it, and tim
 
 ## References
 [[1] DistilBERT, a distilled version of BERT: smaller, faster, cheaper and lighter](https://paperswithcode.com/paper/distilbert-a-distilled-version-of-bert) \
-[[2] HuggingFace Transformers: Summarization on long documents](https://discuss.huggingface.co/t/summarization-on-long-documents/920/24?page=2)
+[[2] Hugging Face Transformers: Summarization on long documents](https://discuss.huggingface.co/t/summarization-on-long-documents/920/24?page=2)
