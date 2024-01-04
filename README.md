@@ -38,7 +38,7 @@ Our subjective judgment is that the articles that are selected as the most posit
 The text content of the articles from the API also sometimes contains a lot of self-referential information about the source of the article such as links to social media accounts or information about subscriptions, but we hope that our summarization method will omit most of this information from the summary we display.
 
 ### UI Adaptions due to API changes
-Unfortunately the news API we are using will make changes on January 15th. More specifically, the data provided for users using a *Free* plan will be reduced e.g., the full content of articles will not be provided anymore. As we use the full article content to create the summary displayed on our UI on Hugging Face, we will omit the summary from our UI. However, all other parts displayed on the UI will remain the same. To demonstrate how our UI was intended to look like, we have created a short video presentation:
+Unfortunately, the news API we are using will make changes on January 15th. More specifically, the data provided for users using a *Free* plan will be reduced e.g., the full content of articles will not be provided anymore. As we use the full article content to create the summary displayed on our UI on Hugging Face, we will omit the summary from our UI. However, all other parts displayed on the UI will remain the same. To demonstrate how our UI was intended to look like, we have created a short video presentation:
 
 https://github.com/MarieGotthardt/the-delight-dispatch/assets/45031262/f1c60b62-7a1b-4352-90a9-52ba079c60c9
 
