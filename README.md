@@ -45,6 +45,8 @@ Unfortunately, the news API we are using will make changes on January 15th. More
 
 https://github.com/MarieGotthardt/the-delight-dispatch/assets/45031262/f1c60b62-7a1b-4352-90a9-52ba079c60c9
 
+We have also provided a showcase of the demo across three consecutive days here: [Showcase of The Delight Dispatch Demo](https://github.com/MarieGotthardt/the-delight-dispatch/blob/main/Showcase%20of%20The%20Delight%20Dispatch%20Demo.pdf)
+
 ### Possible Improvements and Extensions
 #### Sentiment Rating
 We only use the headline of an article to compute its sentiment, meaning that a misleading headline might cause an incorrect sentiment rating to be assigned to the article. A more robust method could be to extract some important sentences from the article and use the sentiment of these to create an overall sentiment rating for the article.
