@@ -1,18 +1,18 @@
 # The Delight Dispatch ☀️🗞️
 The Delight Dispatch uses a news API and transformer models for sentiment analysis to deliver positive news everyday!
 
-Demo on Hugging Face [Delight News: The Delight Dispatch](https://huggingface.co/spaces/DelightNews/the-delight-dispatch-demo) 
+Demo on Hugging Face: [DelightNews/the-delight-dispatch-demo](https://huggingface.co/spaces/DelightNews/the-delight-dispatch-demo) 
 
 ## Application Overview
-In this project, we created a severless ML system for displaying positive news each day. Our system consists of three components:
-A feature pipeline for preparing the data and inserting it into a feature group
-An inference pipeline for determining the most positive article every day
-A user interface for displaying the most positive article of the day as well as historical sentiment data of the retrieved news articles
-To retrieve news articles daily, we used the newsdata.io API. 
+In this project, we created a severless ML system for displaying positive news each day. Our system consists of three components: 
+- A feature pipeline for requesting and preparing news article data and inserting it into a feature group
+- An inference pipeline for determining the most positive article everyday and creating the images displayed in the UI
+- A user interface for displaying the most positive article of the day as well as historical sentiment data of the retrieved news articles
+
 In the following sections, we explain our data and the different components of our system in more detail. 
 
 ## Data
-For this project, we retrieved articles written in English from different newspapers and from different countries (Great Britain, US, Australia, New Zealand, Canada, and Ireland) using the [newsdata.io API](https://newsdata.io/). 
+For this project, we retrieved articles everyday written in English from different newspapers and from different countries (Great Britain, US, Australia, New Zealand, Canada, and Ireland) using the [newsdata.io API](https://newsdata.io/). 
 The API returns the following attributes for each requested article: 
 *'article_id', 'title', 'link', 'keywords', 'creator', 'video_url', 'description', 'content', 'pubDate', 'image_url', 'source_id', 'source_priority', 'country', 'category', 'language', 'ai_tag', 'sentiment', 'sentiment_stats'*.
 
@@ -22,14 +22,17 @@ The API returns the following attributes for each requested article:
 In our feature pipeline, we prepared the data to obtain reusable features which we stored in a feature group on the feature store *Hopsworks*. Therefore, we checked the different attributes for missing values. As we noticed during some preliminary experiments that the attributes *'keywords'*, *'creator'*, *'video_url'*, *'image_url'*, and *'source_priority'*, often contained missing values and as we did not consider these attributes as important for our goal of determining the most positive news, we decided to omit these attributes, i.e. to not include those in the feature group. Furthermore, meaningful values for the attributes *'ai_tag'*, *'sentiment'*, and *'sentiment_stats'* are only provided for premium (i.e. paying) users of the newsdata.io API. Thus, we omitted these attributes as well. Additionally to excluding attributes that were not of value for our task, we casted the attributes *'category'*, *'country'*, and *'pubDate*' to be of type *string*. 
 
 ### Inference Pipeline
-In our inference pipeline, we get the data for the stored articles of the day and use a sentiment analysis transformer model to compute the sentiments of the articles. These sentiments are stored in a feature group that just contains the attributes: *'article_id'*, *'pubdate'*, *'sentiment'*. We use [this model](https://huggingface.co/distilbert-base-uncased-finetuned-sst-2-english) for sentiment analysis as it is a relatively small but still well-performing model [1].
+In our inference pipeline, we get the data for the stored articles of the day and use a sentiment analysis transformer model to compute the sentiments of the articles. These sentiments are stored in a feature group that just contains the attributes: *'article_id'*, *'pubdate'*, *'sentiment'*. We use [this DistilBERT model](https://huggingface.co/distilbert-base-uncased-finetuned-sst-2-english) for sentiment analysis as it is a relatively small but still well-performing model [1].
 
-We then also find the most positive article and compute the average sentiment rating of the day, which is stored along with the data for the most positive article in a feature group. This feature group stores the positive articles that are displayed in the demo and is also used to create the timeline plots for the demo of average sentiment and most positive article sentiment for the past few days. The text content of the most positive articles is summarized (before storing it in the feature group) using [this model](https://huggingface.co/sshleifer/distilbart-cnn-12-6), however since article content may exceed the token limit of the model; code posted by Moritz Laurer in the Hugging Face forums is used split the content into batches and then combine the summaries for each batch [2]. 
+We then also find the most positive article and compute the average sentiment rating of the day, which is stored along with the data for the most positive article in a feature group. This feature group stores the positive articles that are displayed in the demo and is also used to create the timeline plots for the demo of average sentiment and most positive article sentiment for the past few days. The text content of the most positive articles is summarized (before storing it in the feature group) using [this DistilBART model](https://huggingface.co/sshleifer/distilbart-cnn-12-6), however since article content may exceed the token limit of the model; code posted by Moritz Laurer in the Hugging Face forums is used to split the content into batches and then combine the summaries for each batch [2]. 
 
-The inference pipeline also makes a call to the OpenAI API to request an image to be generated by the DALLE-3 model for the headline of the day. If the call works and an image is returned it is then stored in Hopsworks and displayed in the demo along with the article, however, the OpenAI API refuses to generate images for certain headlines, and in such a case the demo will just use a default image of a logo for the app.
+The inference pipeline also makes a call to the OpenAI API to request an image to be generated by the DALLE-3 model for the headline of the day. If the call works and an image is returned it is then stored in Hopsworks and displayed in the demo along with the article, however, the OpenAI API sometimes refuses to generate an image for the provided headline, and in such a case the demo will just use a default image of a logo for the app.
 
 ### User Interface
 The UI for the application is a Gradio app run in a Hugging Face Space. The UI displays the most positive article of the day, an image to go with the article, and timeline plots of the average sentiment of news and the sentiment of articles shown in UI to demonstrate that the articles shown in our UI are more positive than the general news.
+
+### Running the System
+The pipelines are run everyday with Github Actions using API keys added to the repo as secrets and the text files in the repo with library requirements. A Github Action is also used to restart the Hugging Face Space for the UI everyday, so that the UI will be updated with the latest data from the feature store.
 
 ## Discussion
 ### Evaluation of our Results
